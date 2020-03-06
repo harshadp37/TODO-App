@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TODO App</title>
+    <link rel='stylesheet' type='text/css' href='css/style.css'>
+</head>
+
+<body>
+    <div class="back">
+        <div class="main">
+            <div class="header">
+                <h2>TODO App</h2>
+            </div>
+
+            <form method="POST" action="/list/add">
+                <div class="form-element">
+                    <label for="title">Description</label>
+                    <input type="text" id="title" name="title" placeholder="What do you want to do.?" />
+                </div>
+                <div class="form-grp-element">
+                    <div class="form-element">
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                                <option value="" selected disabled>Select Category</option>
+                                <option value="personal">Personal</option>
+                                <option value="work">Work</option>
+                                <option value="school">School</option>
+                                <option value="cleaning">Cleaning</option>
+                                <option value="other">other</option>
+                            </select>
+                    </div>
+                    <div class="form-element">
+                        <label for="deadline">Due Date</label>
+                        <input type="date" id="deadline" name="deadline" />
+                    </div>
+                </div>
+                <div class="form-element">
+                    <button type="submit"><span>&#43;</span> ADD TASK</button>
+                </div>
+            </form>
+
+            <div class="list">
+                <div class="list-item">
+                    <div class="title">
+                        <p>TODO something.</p>
+                        <p>Jun 4, 2020</p>
+                    </div>
+                    <div class="category">
+                        <span>WORK</span>
+                        <button onclick="clic()">DELETE</button>
+                    </div>
+                </div>
+
+
+                <div class="list-item">
+                    <div class="title">
+                        <p>TODO something.</p>
+                        <p>Jun 9, 2020</p>
+                    </div>
+                    <div class="category">
+                        <span>WORK</span>
+                        <button onclick="clic()">DELETE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/script.js"></script>
+</body>
+
+</html>

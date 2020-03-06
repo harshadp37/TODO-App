@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.back {
+    background: #ababab;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.main {
+    background: white;
+    width: 60%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 15px 0 black;
+}
+
+.main .header h2 {
+    margin: 0.8rem;
+    font-family: sans-serif;
+    font-size: 2rem;
+    text-shadow: 2px 2px 2px #959595;
+}
+
+.formDiv {}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.form-element {
+    width: 100%;
+    padding: 5px;
+    padding-bottom: 30px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form>.form-element:first-child {
+    border-top: 2px solid black;
+}
+
+form>.form-element:last-child {
+    border-bottom: 2px solid black;
+    padding: 15px 0;
+}
+
+.form-element label {
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 10px 0;
+}
+
+.form-element input,
+.form-element select {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.form-grp-element {
+    width: 100%;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.form-grp-element .form-element {
+    width: 50%;
+    border: 0;
+}
+
+.form-grp-element .form-element:first-child {
+    border-right: 1px solid black;
+}
+
+.form-element select {
+    cursor: pointer;
+}
+
+.form-element button {
+    width: 20%;
+    font-size: 1.3rem;
+    padding: 10px 5px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.form-element button:hover {
+    background: #797979;
+    color: black;
+}
+
+.list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.list-item {
+    width: 100%;
+    padding: 15px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list .list-item :first-child {
+    border-top: 0;
+}
+
+.list .list-item :last-child {
+    border-bottom: 0;
+}
