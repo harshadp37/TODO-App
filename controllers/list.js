@@ -5,7 +5,7 @@ module.exports.addToList = (req, res) => {
 
     /* CREATE LIST ONLY IF TITLE IS PROVIDED ELSE PASS LIST SAVING ERROR TO HOME ROUTE */
     if (req.body.title) {
-        
+
         /* SET DEADLINE TIME TO END OF THE DAY */
         if(req.body.deadline){
             req.body.deadline = new Date(req.body.deadline);
@@ -81,7 +81,7 @@ module.exports.filterList = async (req, res) => {
 
             /* SEND LIST FILTER ERROR IF RESULT DOESN'T HAVE ANY ITEM */
             if(filterLists.length == 0){
-                Options.listFilterError = 'No List Item Exists with specified criteria.';
+                Options.listFilterError = 'No Task Exists With Specified Criteria.';
                 return res.render('home', Options);
             }
             Options.lists = filterLists;

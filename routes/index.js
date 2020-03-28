@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
         TodaysDate.setHours(0);
         TodaysDate.setMinutes(0);
         TodaysDate.setSeconds(0);
-        
+
         /* GET LIST ITEMS TODAY ONWARDS */
         let listWithDeadline = await List.find({$and: [{deadline: {$ne: null}}, {deadline: {$gte: TodaysDate}}]}).sort({deadline: 1});
         let listWithoutDeadline = await List.find({deadline: null});
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 
         /* SEND LIST LOADING ERROR IF LIST DOESN'T HAVE ANY ITEM */
         if(listWithDeadline.length == 0 && listWithoutDeadline.length == 0){
-            Options.listLoadingError = 'Not added anything to list.';
+            Options.listLoadingError = 'Task List is Empty.';
             return res.render('home', Options);
         }
 
