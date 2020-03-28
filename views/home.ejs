@@ -12,7 +12,7 @@
     <div class="back">
         <div class="main">
 
-            <!-- Header -->
+            <!-- HEADER -->
             <div class="header">
                 <h2>TODO App</h2>
                 <div class="today_date">
@@ -22,12 +22,14 @@
                 </div>
             </div>
 
-            <!-- Form To Create TODO -->
+            <!-- FORM TO CREATE TASK -->
             <form method="POST" action="/list/add">
+                <!-- DESCRIPTION -->
                 <div class="form-element">
                     <label for="title">Description</label>
                     <input type="text" id="title" name="title" placeholder="What do you want to do.?" />
                 </div>
+                <!-- CATEGORY & DUE DATE -->
                 <div class="form-grp-element">
                     <div class="form-element">
                         <label for="category">Category</label>
@@ -45,6 +47,7 @@
                         <input type="date" id="deadline" name="deadline" />
                     </div>
                 </div>
+                <!-- ERROR while CREATING & SUBMIT BUTTON -->
                 <div class="form-element">
                     <% if(locals.listSavingError) { %>
 
@@ -58,7 +61,7 @@
 
             <% if(!locals.listLoadingError) { %>
 
-            <!-- Filter Options when there is atleast one list item -->
+            <!-- FILTER OPTIONS WHEN THERE IS ATLEAST ONE LIST ITEM -->
             <div class="filter">
                 <div class="filterHeader">
                     <span>Filter By : </span>
@@ -95,24 +98,24 @@
                     </div>
                 </form>
             </div>
-            <!-- End Of Filter Options -->
+            <!-- END OF FILTER OPTIONS -->
             <% } %>
 
-            <!-- Start of List -->
+            <!-- START OF LISTS -->
             <div class="list">
                 <% if(locals.listLoadingError) { %>
-                <!-- List Loading Error -->
+                <!-- LIST LOADING ERROR -->
                 <div class="error"><span><%= listLoadingError %></span></div>
 
                 <% } else if(locals.listFilterError){ %>
-                <!-- List Filtering Error -->
+                <!-- LIST FILTERING ERROR -->
                 <div class="error"><span><%= listFilterError %></span></div>
 
                 <% }else { %>
 
                 <form id="deleteForm" action="/list/delete" method="POST">
                     <% for(let i=0; locals.lists && i<locals.lists.length; i++){ %>
-                    <!-- Each List Item -->
+                    <!-- EACH LIST ITEM -->
                     <div class="list-item">
                         <div style="position: absolute; width: 5px; height: 100%; left: 0;" class="<%if(locals.lists[i].category){%><%= locals.lists[i].category %><%}else{%> <%= "other" %> <%}%>"></div>
                     <div class="title">
@@ -132,27 +135,27 @@
                             <% if(locals.lists[i].category){ %>
                             <span class="<%= locals.lists[i].category %>"><%= locals.lists[i].category %></span>
                             <% } %>
-                            <input style="width: 15px; height: 15px;" type="checkbox" name="deleteListItem"
+                            <input style="width: 15px; height: 15px;" type="checkbox" name="listItem"
                                 value="<%= locals.lists[i].id %>" onchange="atleastOneCheck(event)" />
                         </div>
                     </div>
-                    <!-- End of Each List Item -->
+                    <!-- END OF EACH LIST ITEM -->
                     <% } %>
 
                 </form>
                 <% } %>
             </div>
-            <!-- End of List -->
+            <!-- END OF LIST -->
 
         </div>
-        <!-- End of Main -->
+        <!-- END OF MAIN -->
         
         <!-- DELETE BUTTON -->
         <button class="deleteBtn" type="submit" form="deleteForm">
             <span>DELETE TASK</span>
         </button>
     </div>
-    <!-- End of Back -->
+    <!-- END OF BACK -->
     <script type="text/javascript" src="/js/script.js"></script>
 </body>
 

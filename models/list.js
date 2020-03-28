@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+/* CREATE LIST SCHEMA WITH TITLE, CATEGORY, DEADLINE */
 var listSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -13,4 +14,5 @@ var listSchema = new mongoose.Schema({
     }
 }, {timestamps: true})
 
+/* EXPORT LIST SCHEMA */
 module.exports = mongoose.model('List', listSchema);

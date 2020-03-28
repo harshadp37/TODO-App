@@ -1,7 +1,12 @@
 var List = require('../models/list');
 
+/* TO CREATE LIST ITEM */
 module.exports.addToList = (req, res) => {
+
+    /* CREATE LIST ONLY IF TITLE IS PROVIDED ELSE PASS LIST SAVING ERROR TO HOME ROUTE */
     if (req.body.title) {
+        
+        /* SET DEADLINE TIME TO END OF THE DAY */
         if(req.body.deadline){
             req.body.deadline = new Date(req.body.deadline);
             req.body.deadline.setHours(23);
@@ -25,32 +30,25 @@ module.exports.addToList = (req, res) => {
     }
 }
 
+/* TO DELETE LIST ITEMS */
 module.exports.deleteListItems = (req, res) => {
-    console.log(req.body);
-    return res.redirect('/')
-    /* 
-    List.findById(req.params.id, (err, listItem)=>{
-        if (err) {
-            console.log('something went wrong. ' + err);
-            return res.redirect('/');
+    List.deleteMany({_id: req.body.listItem}, (err)=>{
+        if(err){
+            console.log('something went wrong.');
         }
-        if(!listItem){
-            console.log('something went wrongg.');
-            return res.redirect('/')
-        }
-        listItem.remove();
         return res.redirect('/')
-    }) */
+    })
 }
 
+/* TO FILTER LIST ITEMS BASED ON CATEGORY & DUE DATE */
 module.exports.filterList = async (req, res) => {
     try{
         let Options = {};
+        
         if(req.body.filterDeadline || req.body.filterCategory){
-            console.log(req.body.filterDeadline ? "true" : "false")
-            console.log(req.body.filterCategory ? "true" : "false")
             let filterQuery = {};
             let filterLists = [];
+            /* FILTER BASED ON DEADLINE & CATEGORY */
             if(req.body.filterDeadline && req.body.filterCategory){
                 Options.filterDeadline = req.body.filterDeadline;
                 Options.filterCategory = req.body.filterCategory;
@@ -81,6 +79,7 @@ module.exports.filterList = async (req, res) => {
                 filterLists = listWithDeadline.concat(listWithoutDeadline);
             }
 
+            /* SEND LIST FILTER ERROR IF RESULT DOESN'T HAVE ANY ITEM */
             if(filterLists.length == 0){
                 Options.listFilterError = 'No List Item Exists with specified criteria.';
                 return res.render('home', Options);
