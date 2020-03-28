@@ -17,7 +17,7 @@
                 <h2>TODO App</h2>
                 <div class="today_date">
                     <h4>Today's Date</h4>
-                    <h4><%=(new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate() + '/' + (new Date().getMonth() + 1 < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1) + '/' + new Date().getFullYear()); %>
+                    <h4><%=(new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate() + '-' + (new Date().getMonth() + 1 < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1) + '-' + new Date().getFullYear()); %>
                     </h4>
                 </div>
             </div>
@@ -102,7 +102,7 @@
             <div class="list">
                 <% if(locals.listLoadingError) { %>
                 <!-- List Loading Error -->
-                <div class="error"><span><% listLoadingError %></span></div>
+                <div class="error"><span><%= listLoadingError %></span></div>
 
                 <% } else if(locals.listFilterError){ %>
                 <!-- List Filtering Error -->
@@ -122,7 +122,7 @@
                             <% if(locals.lists[i].deadline.toLocaleDateString("en-IN", {dateStyle: 'medium'}) == new Date().toLocaleDateString("en-IN", {dateStyle: 'medium'})){%>
                             Today</p>
                             <%}else{%>
-                            <%= (locals.lists[i].deadline.getDate() < 10 ? '0' + locals.lists[i].deadline.getDate() : locals.lists[i].deadline.getDate() + '/' + (locals.lists[i].deadline.getMonth() + 1 < 10 ? '0' + (locals.lists[i].deadline.getMonth() + 1) : locals.lists[i].deadline.getMonth() + 1) + '/' + locals.lists[i].deadline.getFullYear()); %>
+                            <%= ((locals.lists[i].deadline.toLocaleString('default', { month: 'short' })) + ' ' + (locals.lists[i].deadline.getDate()) + ', ' + locals.lists[i].deadline.getFullYear()); %>
                             <%} %>
                             <% }else { %>
                             <p>No deadline.</p>
