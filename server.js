@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "assests")));
 
-app.use('/', require('./routes/home'));
+app.use('/', require('./routes/index'));
 
 app.listen(port, () => {
     console.log("Server is Running on port : " + port);

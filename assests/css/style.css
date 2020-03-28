@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    --backColor: #b5a58e;
 }
 
 body {
@@ -11,20 +12,31 @@ body {
 .back {
     background: #ababab;
     min-width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* MAIN START */
 .main {
-    background: white;
-    width: 60%;
-    height: 60%;
+    background: var(--backColor);
+    width: 50%;
+    height: fit-content;
+    max-height: 85%;
     display: flex;
     flex-direction: column;
     align-items: center;
     box-shadow: 0 0 15px 0 black;
+}
+
+/* HEADER START */
+.main .header{
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .main .header h2 {
@@ -34,9 +46,27 @@ body {
     text-shadow: 2px 2px 2px #959595;
 }
 
-.formDiv {}
+.main .header .today_date {
+    margin: 0;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-form {
+.main .header .today_date h4 {
+    margin: 0.2rem;
+    color: purple;
+}
+/* HEADER END */
+
+/* CREATE FORM START */
+.main>form {
+    background: white;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -104,7 +134,7 @@ form>.form-element:last-child {
 }
 
 .form-element button {
-    width: 20%;
+    width: 30%;
     font-size: 1.3rem;
     padding: 10px 5px;
     background: black;
@@ -119,18 +149,161 @@ form>.form-element:last-child {
     background: #797979;
     color: black;
 }
+/* CREATE FORM END */
 
-.list {
+/* FILTER OPTIONS START */
+.filter{
     width: 100%;
+    padding: 7px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #b5b9f6;
+}
+
+.filter .filterHeader{
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 3px 0;
+    color: black;
+    text-transform: uppercase;
+}
+
+.filter form{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.filter .filterOptions{
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    padding: 7px 10px;
+}
+
+.filter .filterOptions .filterByDeadline, .filter .filterOptions .filterByCategory{
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
 }
 
+.filter .filterOptions label{
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.filter .filterOptions input, .filter .filterOptions select{
+    background: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid black;
+    padding: 3px;
+}
+
+.filter .filterButtons{
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 7px 10px;
+}
+
+.filter .filterButtons .btnFilter, .filter .filterButtons .btnReset{
+    width: 30%;
+    height: 70%;
+    font-size: 1rem;
+    font-weight: 600;
+    background: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.filter .filterButtons .btnFilter{
+    color: #0e680e;
+    border: 2px solid #0e680e;
+}
+
+.filter .filterButtons .btnReset{
+    color: #970e0e;
+    border: 2px solid #970e0e;
+}
+
+.filter .filterButtons .btnFilter:hover{
+    background: #0e680e;
+    color: white;
+}
+
+.filter .filterButtons .btnReset:hover{
+    background: #970e0e;
+    color: white;
+}
+/* FILTER OPTIONS END */
+
+/* LIST START */
+.list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* LIST SCROLLBAR START */
+.list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.list::-webkit-scrollbar-button{
+    height: 5px;
+ 	background: black; 
+}
+
+.list::-webkit-scrollbar-track {
+    background: #c84141;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: #15ad15; 
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+    background: #1cf51c; 
+}
+/* LIST SCROLLBAR END */
+
+.error {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    color: #b30808;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+#deleteForm{
+    width: 100%;
+}
+
+/* EACH LIST ITEM START */
 .list-item {
+    position: relative;
     width: 100%;
     padding: 15px;
+    padding-left: 20px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     display: flex;
@@ -139,10 +312,105 @@ form>.form-element:last-child {
     align-items: center;
 }
 
-.list .list-item :first-child {
-    border-top: 0;
+.list>.list-item:first-child {
+    border-top: 2px solid black;
 }
 
-.list .list-item :last-child {
-    border-bottom: 0;
+.list>.list-item:last-child {
+    border-bottom: 2px solid black;
 }
+
+.list-item .title {
+    width: 50%;
+}
+
+.list-item .title p:first-child {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.list-item .status {
+    width: 15%;
+}
+
+.list-item .category {
+    width: 35%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.list-item .category>span{
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: black;
+}
+
+.personal{
+    background: #6d6fff;
+}
+
+.work{
+    background: #ff5722;
+}
+
+.school{
+    background: #2f8eed;
+}
+
+.cleaning{
+    background: #12df1b;
+}
+
+.other{
+    background: coral;
+}
+
+.list-item .category button {
+    background: inherit;
+    border: 0;
+    font-weight: 500;
+    font-size: 1.5rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.list-item .category button:hover {
+    color: red;
+}
+/* EACH LIST ITEM END */
+/* LIST END */
+/* MAIN END */
+
+/* DELETE BUTTON START */
+.deleteBtn{
+    width: 50%;
+    height: 0;
+    padding: 0;
+    background: #eb2727;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    overflow: hidden;
+    letter-spacing: 3px;
+    box-shadow: 0 0 5px 0 black;
+    transition: all 0.5s;
+}
+
+.deleteBtn:hover{
+    background: #990808;
+    color: white;
+}
+/* DELETE BUTTON END */

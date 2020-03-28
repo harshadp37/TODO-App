@@ -11,7 +11,6 @@ var listSchema = new mongoose.Schema({
     deadline: {
         type: Date,
     }
-}, { timestamps: 1 })
+}, {timestamps: true})
 
-var List = mongoose.model('List', listSchema);
-module.exports = List;
+module.exports = mongoose.model('List', listSchema);

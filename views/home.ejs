@@ -3,16 +3,26 @@
 
 <head>
     <title>TODO App</title>
-    <link rel='stylesheet' type='text/css' href='css/style.css'>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel='stylesheet' type='text/css' href='/css/style.css'>
 </head>
 
 <body>
     <div class="back">
         <div class="main">
+
+            <!-- Header -->
             <div class="header">
                 <h2>TODO App</h2>
+                <div class="today_date">
+                    <h4>Today's Date</h4>
+                    <h4><%=(new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate() + '/' + (new Date().getMonth() + 1 < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1) + '/' + new Date().getFullYear()); %>
+                    </h4>
+                </div>
             </div>
 
+            <!-- Form To Create TODO -->
             <form method="POST" action="/list/add">
                 <div class="form-element">
                     <label for="title">Description</label>
@@ -22,13 +32,13 @@
                     <div class="form-element">
                         <label for="category">Category</label>
                         <select id="category" name="category">
-                                <option value="" selected disabled>Select Category</option>
-                                <option value="personal">Personal</option>
-                                <option value="work">Work</option>
-                                <option value="school">School</option>
-                                <option value="cleaning">Cleaning</option>
-                                <option value="other">other</option>
-                            </select>
+                            <option value="" selected disabled>Select Category</option>
+                            <option value="personal">Personal</option>
+                            <option value="work">Work</option>
+                            <option value="school">School</option>
+                            <option value="cleaning">Cleaning</option>
+                            <option value="other">other</option>
+                        </select>
                     </div>
                     <div class="form-element">
                         <label for="deadline">Due Date</label>
@@ -36,37 +46,114 @@
                     </div>
                 </div>
                 <div class="form-element">
-                    <button type="submit"><span>&#43;</span> ADD TASK</button>
+                    <% if(locals.listSavingError) { %>
+
+                    <div class="error"><span><%= listSavingError %></span></div>
+
+                    <% } %>
+                    <button type="submit"><span><i class="fa fa-plus"></i></span> ADD TASK</button>
                 </div>
             </form>
 
-            <div class="list">
-                <div class="list-item">
-                    <div class="title">
-                        <p>TODO something.</p>
-                        <p>Jun 4, 2020</p>
-                    </div>
-                    <div class="category">
-                        <span>WORK</span>
-                        <button onclick="clic()">DELETE</button>
-                    </div>
-                </div>
 
+            <% if(!locals.listLoadingError) { %>
 
-                <div class="list-item">
-                    <div class="title">
-                        <p>TODO something.</p>
-                        <p>Jun 9, 2020</p>
-                    </div>
-                    <div class="category">
-                        <span>WORK</span>
-                        <button onclick="clic()">DELETE</button>
-                    </div>
+            <!-- Filter Options when there is atleast one list item -->
+            <div class="filter">
+                <div class="filterHeader">
+                    <span>Filter By : </span>
                 </div>
+                <form method="POST" action="/list/filter">
+                    <div class="filterOptions">
+                        <div class="filterByDeadline">
+                            <label for="filterDeadline">Due Date</label>
+                            <input type="date" id="filterDeadline" name="filterDeadline"
+                                value="<%= locals.filterDeadline %>" />
+                        </div>
+                        <div class="filterByCategory">
+                            <label for="filterCategory">Category</label>
+                            <select id="filterCategory" name="filterCategory">
+                                <option value="" disabled <% if(!locals.filterCategory){ %><%= 'selected' %>
+                                    <% } else { %> <%= '' %> <% } %>>Select Category</option>
+                                <option value="personal" <% if(locals.filterCategory == "personal"){ %><%= 'selected' %>
+                                    <% } else { %> <%= '' %> <% } %>>Personal</option>
+                                <option value="work" <% if(locals.filterCategory == "work"){ %><%= 'selected' %>
+                                    <% } else { %> <%= '' %> <% } %>>Work</option>
+                                <option value="school" <% if(locals.filterCategory == "school"){ %><%= 'selected' %>
+                                    <% } else { %> <%= '' %> <% } %>>School</option>
+                                <option value="cleaning" <% if(locals.filterCategory == "cleaning"){ %><%= 'selected' %>
+                                    <% } else { %> <%= '' %> <% } %>>Cleaning</option>
+                                <option value="other" <% if(locals.filterCategory == "other"){ %><%= 'selected' %>
+                                    <% } else { %> <%= '' %> <% } %>>other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filterButtons">
+                        <button type="submit" class="btnFilter">Filter</button>
+                        <a href="/" type="button" class="btnReset" style="text-decoration: none;">Reset</a>
+                    </div>
+                </form>
             </div>
+            <!-- End Of Filter Options -->
+            <% } %>
+
+            <!-- Start of List -->
+            <div class="list">
+                <% if(locals.listLoadingError) { %>
+                <!-- List Loading Error -->
+                <div class="error"><span><% listLoadingError %></span></div>
+
+                <% } else if(locals.listFilterError){ %>
+                <!-- List Filtering Error -->
+                <div class="error"><span><%= listFilterError %></span></div>
+
+                <% }else { %>
+
+                <form id="deleteForm" action="/list/delete" method="POST">
+                    <% for(let i=0; locals.lists && i<locals.lists.length; i++){ %>
+                    <!-- Each List Item -->
+                    <div class="list-item">
+                        <div style="position: absolute; width: 5px; height: 100%; left: 0;" class="<%if(locals.lists[i].category){%><%= locals.lists[i].category %><%}else{%> <%= "other" %> <%}%>"></div>
+                    <div class="title">
+                        <p><%= locals.lists[i].title %></p>
+                        <%if(locals.lists[i].deadline) {%>
+                        <p><span><i class=" fa fa-calendar"></i></span>
+                            <% if(locals.lists[i].deadline.toLocaleDateString("en-IN", {dateStyle: 'medium'}) == new Date().toLocaleDateString("en-IN", {dateStyle: 'medium'})){%>
+                            Today</p>
+                            <%}else{%>
+                            <%= (locals.lists[i].deadline.getDate() < 10 ? '0' + locals.lists[i].deadline.getDate() : locals.lists[i].deadline.getDate() + '/' + (locals.lists[i].deadline.getMonth() + 1 < 10 ? '0' + (locals.lists[i].deadline.getMonth() + 1) : locals.lists[i].deadline.getMonth() + 1) + '/' + locals.lists[i].deadline.getFullYear()); %>
+                            <%} %>
+                            <% }else { %>
+                            <p>No deadline.</p>
+                            <% } %>
+                        </div>
+                        <div class="category">
+                            <% if(locals.lists[i].category){ %>
+                            <span class="<%= locals.lists[i].category %>"><%= locals.lists[i].category %></span>
+                            <% } %>
+                            <input style="width: 15px; height: 15px;" type="checkbox" name="deleteListItem"
+                                value="<%= locals.lists[i].id %>" onchange="atleastOneCheck(event)" />
+                        </div>
+                    </div>
+                    <!-- End of Each List Item -->
+                    <% } %>
+
+                </form>
+                <% } %>
+            </div>
+            <!-- End of List -->
+
         </div>
+        <!-- End of Main -->
+        
+        <!-- DELETE BUTTON -->
+        <button class="deleteBtn" type="submit" form="deleteForm">
+            <span>DELETE TASK</span>
+        </button>
     </div>
-    <script type="text/javascript" src="js/script.js"></script>
+    <!-- End of Back -->
+    <script type="text/javascript" src="/js/script.js"></script>
 </body>
 
 </html>
