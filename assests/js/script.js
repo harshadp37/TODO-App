@@ -9,8 +9,12 @@ let checkCount = 0;
 function atleastOneCheck(e) {
     if(e.target.checked){
         checkCount++;
+        e.target.parentElement.previousElementSibling.style.textDecorationLine = "line-through";
+        e.target.parentElement.firstElementChild.style.textDecorationLine = "line-through";
     }else{
         checkCount--;
+        e.target.parentElement.previousElementSibling.style.textDecorationLine = "none";
+        e.target.parentElement.firstElementChild.style.textDecorationLine = "none";
     }
     console.log(checkCount)
     if(checkCount == 0){
