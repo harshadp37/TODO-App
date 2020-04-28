@@ -16,7 +16,6 @@ function atleastOneCheck(e) {
         e.target.parentElement.previousElementSibling.style.textDecorationLine = "none";
         e.target.parentElement.firstElementChild.style.textDecorationLine = "none";
     }
-    console.log(checkCount)
     if(checkCount == 0){
         let deleteBtn = document.querySelector('.deleteBtn');
         deleteBtn.style.height = "0";
